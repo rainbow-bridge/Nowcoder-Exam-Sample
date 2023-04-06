@@ -1,0 +1,69 @@
+//C Program
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
+int main(){
+    int N,i,j,p,k,l,q,t,u,v,w;
+    p=0;
+    q=0;
+    w=0;
+    char tmp[100];
+    scanf("%d ",&N);
+    char str[N][100];
+    char strorder[1000][100];
+    for(i=0;i<N;i++)
+        {
+            scanf("%s ",str[i]);
+        }
+    
+    for(j=0;j<N;j++) //循环N个输入字符串
+    {
+        int r=strlen(str[j])/8;
+        int s=strlen(str[j])%8;
+        for(l=0;l<r;l++) //对于单个字符串而言，循环r次，然后是下一个长度为8的字符串,这边结束的时候l已经++了
+        {
+            for(t=8*l;t<8*l+8;t++)
+            {
+            strorder[w][q]=str[j][t];
+            q++;
+            }
+            w++;
+        }
+        //对于任意一个输入字符串，保存剩余的字符到strorder,此时不需要循环，所以q=0
+            //part 1
+             if(s!=0)
+            {
+            q=0; //这边要加一个0，要不然如果上面q有值，会带到下面
+            for(u=8*r;u<8*r+s;u++)
+             {   
+            strorder[w][q]=str[j][u]; //这边w已经往后移了一位了
+            //printf("%c", str[j][u]);
+            q++;
+             }
+            //part 2
+           
+             for(v=0;v<8-s;v++)
+             {
+            strorder[w][q]='0';
+            q++;
+             }
+            }
+            if(s!=0)
+            {w++;}
+            q=0;
+    }
+        for(i=0;i<w;i++)
+        {
+            for(j=0;j<w-i-1;j++)
+            if(strcmp(strorder[j],strorder[j+1])>0)
+            {
+            strcpy(tmp,strorder[j]);
+            strcpy(strorder[j],strorder[j+1]);
+            strcpy(strorder[j+1],tmp);
+            }
+        }
+        for(i=0;i<w;i++)
+        {
+            printf("%s ", strorder[i]);
+        }
+}
